@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Editing {{user.full_name}}
+{% endblock %}
+
+{% block content %}
+
+<h1>Edit user ID {{user_id}}</h1>
+
+<p>Original First:  {{user.first_name}}</p>
+<p>Original Last:  {{user.last_name}}</p>
+<p>Original Image URL: {{user.image_url}}</p>
+
+    <form name="edit_user" method="POST">
+        <label for="fname">First Name: </label>
+        <input type="text" name="first_name" id="fname"><br />
+
+        <label for="lname">Last Name: </label>
+        <input type="text" name="last_name" id="lname"><br />
+
+        <label for="imgurl">Image URL: </label>
+        <input type="text" name="image_url" id="imgurl"><br />
+
+        <button action='/users/{{user_id}}/edit'>Save Changes</button>
+    </form>
+    <a href="/users/{{user_id}}"><button>Cancel Editing</button></a>
+
+{% endblock %}
