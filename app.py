@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request
-from flask_debugtoolbar import DebugToolbarExtension
-from models import User, db, connect_db, get_user_by_id
+# from flask_debugtoolbar import DebugToolbarExtension
+from models import User, db, connect_db
 
 app = Flask(__name__)
 
@@ -9,9 +9,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
 app.config['SECRET_KEY'] = 'keeta'
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-debug = DebugToolbarExtension(app)
+# debug = DebugToolbarExtension(app)
 
 connect_db(app)
 
