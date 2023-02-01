@@ -2,6 +2,8 @@ from app import app
 
 from flask_sqlalchemy import SQLAlchemy
 
+from datetime import datetime as dt
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 
 db = SQLAlchemy()
@@ -30,6 +32,25 @@ class User(db.Model):
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+    
+class Post(db.Model):
+    """Blog posts"""
+
+    __tablename__ = 'posts'
+
+    id = db.Column(db.Integer,
+                   primary_key = True,
+                   auto_increment = True)
+    title = db.Column(db.Text,
+                      nullable = False)
+    content = db.Column(db.Text,
+                        nullable = False)
+    created_at = db.Column(db.DateTime,
+                           nullable = False,
+                           default = dt.now())
+    user_id_fk = db.Column(db.Integer,
+                        db.ForeignKey('users.id'))
+    user = db.relationship('User',backref='post')
 
 
 db.app = app
@@ -47,10 +68,15 @@ tyler = User(first_name='Tyler', last_name='Durden',image_url='https://media.ten
 test_db_user = User(first_name='test', last_name='dbuser',image_url='https://media.tenor.com/g6wy5gpkeFgAAAAC/brain.gif')
 
 
-# Add new objects to session, so they'll persist
+# Add new user objects to session, so they'll persist
 db.session.add(katie)
 db.session.add(tyler)
 db.session.add(test_db_user)
+
+#Add posts
+ty_post_1 = Post(title='First post', content='Hello world, first post!', user_id_fk=2)
+db.session.add(ty_post_1)
+
 
 # Commit--otherwise, this never gets saved!
 db.session.commit()

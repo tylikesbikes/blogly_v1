@@ -15,4 +15,23 @@
     </form>
 
     <form action="/" method="GET"><button>Back to Users</button></form>
+
+    {% if posts != None %}
+        <p>Posts</p>
+        <ul>
+            {% for p in posts %}
+                <li>
+                    <a href="/posts/{{p.id}}">{{p.title}}</a>
+                </li>
+            {% endfor%}
+        </ul>
+
+    {% else %}
+        <p>No Posts Yet!</p>
+    {% endif %}
+
+    <form method="GET" action="/users/{{user.id}}/posts/new">
+        <button>Add Post</button>
+    </form>
+
 {% endblock %}

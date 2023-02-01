@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+ {{author.full_name}} -- {{post.title}}
+{% endblock %}
+
+{% block content %}
+<h1>{{post.title}}</h1>
+<h2>{{post.content}}</h2>
+<cite>By {{author.full_name}}</cite>
+
+<form name="back_to_user" action = '/users/{{author.id}}'>
+    <button>Back to User Page</button>
+</form>
+
+<form name="edit_post" action = '/posts/{{post.id}}/edit' method="GET">
+    <button>Edit Post</button>
+</form>
+
+<form name="delete_post" action = '/posts/{{post.id}}/delete' method="POST">
+    <button>Delete Post</button>
+</form>
+{% endblock %}
+
