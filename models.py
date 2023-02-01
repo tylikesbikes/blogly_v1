@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from other_functions import show_friendly_date
 from datetime import datetime as dt
 
 db = SQLAlchemy()

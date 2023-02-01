@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request
 # from flask_debugtoolbar import DebugToolbarExtension
 from models import User, Post, db, connect_db
+from other_functions import show_friendly_date
 
 app = Flask(__name__)
 
@@ -20,9 +21,11 @@ app.app_context().push()
 
 @app.route('/')
 def redirect_to_users():
-    """Redirect to users list """
+    """Show top 5 posts and a link to users page """
 
-    return redirect('/users')
+    recent_5_posts = Post.query.order_by(Post.created_at.desc()).limit(5)
+    
+    return render_template('home.html',posts = recent_5_posts, friendly_date = show_friendly_date)
 
 @app.route('/users')
 def show_users():
@@ -121,9 +124,11 @@ def show_post(postid):
 
     this_post = Post.query.get(postid)
     post_author = User.query.get(this_post.user_id_fk)
+    friendly_date = this_post.created_at
+    friendly_date = show_friendly_date(friendly_date)
     
 
-    return render_template('show_post.html',post = this_post, author=post_author)
+    return render_template('show_post.html',post = this_post, author=post_author, friendly_date = friendly_date)
 
 @app.route('/posts/<int:postid>/delete',methods=['POST'])
 def delete_post(postid):
@@ -161,3 +166,7 @@ def update_post(postid):
     db.session.commit()
 
     return redirect(f'/posts/{postid}')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return "Custom 404:  The route you tried to access either doesn't exist or uses in invalid user id or post id", 404

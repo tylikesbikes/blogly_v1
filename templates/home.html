@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Welcome
+{% endblock %}
+
+{% block content %}
+
+<a href="/users">Go to Users Page</a>
+
+<h1>Most Recent Posts</h1>
+
+<ul>
+{% for p in posts %}
+    <h2>{{p.title}}</h2>
+    <p>{{p.content}}</p>
+    <p>By {{p.user.full_name}} on {{friendly_date(p.created_at)}}</p>
+{% endfor %}
+</ul>
+
+{% endblock %}
