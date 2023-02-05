@@ -29,7 +29,7 @@ class User(db.Model):
     image_url = db.Column(db.String(500),
                           default='https://freeiconshop.com/wp-content/uploads/edd/gif-outline.png')
     
-    posts = db.relationship('Post')
+    posts = db.relationship('Post', backref='user', cascade='all, delete')
 
     @property
     def full_name(self):
@@ -49,13 +49,14 @@ class Post(db.Model):
                         nullable = False)
     created_at = db.Column(db.DateTime,
                            nullable = False)
-    user_id_fk = db.Column(db.Integer,
-                        db.ForeignKey('users.id'))
     
-    user = db.relationship('User',backref='post')
+    user_id_fk = db.Column(db.Integer,
+                        db.ForeignKey('users.id', ondelete='cascade'))
+    
+    # user = db.relationship('User',backref='post',cascade='all, delete-orphan')
     tags = db.relationship('Tag',
                             secondary='posttags',
-                            backref='tagged_posts')
+                            backref='tagged_posts', cascade='all, delete')
     
 
 class Tag(db.Model):
@@ -70,7 +71,10 @@ class Tag(db.Model):
     name = db.Column(db.Text,
                      unique = True)
     
-    posts_with_tag = db.relationship('PostTag',backref='posts_by_tag')
+    # post_tags = db.relationship('PostTag',backref='post_tags')                          # This will show a list of post/tag relationships in the PostTag table for a given tag
+    # posts_by_tag = db.relationship('Post',                
+    #                                  secondary = 'posttags', backref='posts_by_tag')    # This will show a list of posts that have this tag on them
+
     
     
 class PostTag(db.Model):
@@ -80,8 +84,7 @@ class PostTag(db.Model):
 
     post_id = db.Column(db.Integer,
                         db.ForeignKey('posts.id'),
-                        primary_key = True,
-                        )
+                        primary_key = True)
     tag_id = db.Column(db.Integer,
                        db.ForeignKey('tags.id'),
                        primary_key = True)
@@ -106,16 +109,19 @@ test_db_user = User(first_name='test', last_name='dbuser',image_url='https://med
 db.session.add(katie)
 db.session.add(tyler)
 db.session.add(test_db_user)
+db.session.commit()
 
 #Add posts
 ty_post_1 = Post(title='First post', content='Hello world, first post!', created_at=dt.now(), user_id_fk=2)
 db.session.add(ty_post_1)
+db.session.commit()
 
 #Add Tags
 tag1 = Tag(name='Happy')
 tag2 = Tag(name='Funny')
 db.session.add(tag1)
 db.session.add(tag2)
+db.session.commit()
 
 #PostTags
 posttag1 = PostTag(post_id=1,tag_id=2)

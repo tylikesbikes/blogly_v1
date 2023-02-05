@@ -44,7 +44,7 @@ class BloglyTestCase(TestCase):
             html_base = self.client.get('/',follow_redirects=True)
             html_redir = self.client.get('/users')
 
-            self.assertIn(b'tyler',html_base.data)
+            self.assertIn(b'Most Recent Posts',html_base.data)
 
             self.assertIn(b'<h1>Users</h1>',html_redir.data)
             self.assertIn(b'katie',html_redir.data)

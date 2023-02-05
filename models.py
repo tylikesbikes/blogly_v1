@@ -24,7 +24,7 @@ class User(db.Model):
     image_url = db.Column(db.String(500),
                           default='https://freeiconshop.com/wp-content/uploads/edd/gif-outline.png')
     
-    posts = db.relationship('Post',cascade='all, delete-orphan', backref='user')
+    posts = db.relationship('Post', backref='user', cascade='all, delete')
 
     @property
     def full_name(self):
@@ -46,9 +46,9 @@ class Post(db.Model):
                            nullable = False)
     
     user_id_fk = db.Column(db.Integer,
-                        db.ForeignKey('users.id'))
+                        db.ForeignKey('users.id', ondelete='cascade'))
     
-    # user = db.relationship('User',backref='post')
+    # user = db.relationship('User',backref='post',cascade='all, delete-orphan')
     tags = db.relationship('Tag',
                             secondary='posttags',
                             backref='tagged_posts')
@@ -83,6 +83,8 @@ class PostTag(db.Model):
     tag_id = db.Column(db.Integer,
                        db.ForeignKey('tags.id'),
                        primary_key = True)
+
+
 
 #######ORIGINAL MODELS################
 # class User(db.Model):

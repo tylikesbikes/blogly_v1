@@ -19,6 +19,23 @@ connect_db(app)
 app.app_context().push()
 
 
+####  GETLIST testing
+# @app.route('/tttesting', methods=['GET','POST'])
+# def tttest():
+#     if request.method=='GET':
+#         return render_template('tttestlist.html')
+#     elif request.method=='POST':
+#         checkboxes = []
+#         for s in request.form.getlist('cb'):
+#             checkboxes.append(s)
+
+#     return checkboxes
+
+
+
+
+####
+
 @app.route('/')
 def redirect_to_users():
     """Show top 5 posts and a link to users page """

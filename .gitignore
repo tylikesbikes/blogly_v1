@@ -3,3 +3,4 @@ venv/
 __venv__
 blogly.code-workspace
 venv/
+templates/tttestlist.html

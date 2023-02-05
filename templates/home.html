@@ -12,7 +12,7 @@
 
 <p><a href="/users">Go to Users Page</a></p>
 <p><a href="/tags">View Tags</a></p>
-<p><a href="/tags/new">Add a new tag</a></p>
+<!-- <p><a href="/tags/new">Add a new tag</a></p> -->
 
 <h1>Most Recent Posts</h1>
 
@@ -22,7 +22,14 @@
 <ul>
 {% for p in posts %}
     <h2><a href="/posts/{{p.id}}">{{p.title}}</a></h2>
+    
+    <p>Tags: 
+    {% for t in p.tags %}
+        <span class="tag"><a href="/tags/t.id">[{{t.name}}]</a></span>  
+    {% endfor %}
+    </p>
     <p>{{p.content}}</p>
+
     <p>By {{p.user.full_name}} on {{friendly_date(p.created_at)}}</p>
 {% endfor %}
 </ul>
