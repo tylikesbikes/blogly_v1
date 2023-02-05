@@ -7,6 +7,13 @@
     <form name="new_post" method="POST" action="/users/{{user.id}}/posts/new">
         <p>Title</p><input type="text" default="Post Title" name="post_title" width="75%">
         <p>Post Content</p><input type="textarea" default="Post Content" name="post_content" rows="4" width="75%">
+        <div name="tags">
+            <h3>Tags:</h3>
+            {% for t in tags %}
+            <input type="checkbox" id="{{t.id}}" name="{{t.id}}" value="{{t.id}}">
+            <label for="tag{{t.id}}">{{t.name}}</label>
+            {% endfor %}
+        </div>
         <br><button>Submit New Post</button>
     </form>
 

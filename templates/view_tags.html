@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h1>Tags</h1>
+
+<ul>
+    {% for t in tags %}
+        <li>
+            <a href = "/tags/{{t.id}}">{{t.name}}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

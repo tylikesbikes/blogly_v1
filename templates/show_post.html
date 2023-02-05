@@ -4,8 +4,23 @@
  {{author.full_name}} -- {{post.title}}
 {% endblock %}
 
+
+{% block homelink %}
+<p><a href="/">Go Home</a></p>
+{% endblock %}
 {% block content %}
 <h1>{{post.title}}</h1>
+
+{% if tags %}
+<h4>Tags:
+    <p>
+        {% for t in tags %}
+            <span><a href="/tags/{{t.id}}">[{{t.name}}]</a> </span>
+        {% endfor %}
+    </p>
+
+</h4>
+{% endif %}
 <h2>{{post.content}}</h2>
 <cite>By {{author.full_name}} on {{friendly_date}}</cite>
 

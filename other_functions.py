@@ -33,5 +33,6 @@ def show_friendly_date(date_time):
         return (hour, ampm)
     
     hour_ampm = adjust_hour_with_ampm(date_time.hour)
+    minute = str(date_time.minute) if date_time.minute >= 10 else '0'+str(date_time.minute)
 
-    return f'{days_of_week[date_time.weekday()]} {months_of_year[date_time.month]} {date_time.day}, {hour_ampm[0]}:{date_time.minute} {hour_ampm[1]}'
+    return f'{days_of_week[date_time.weekday()]} {months_of_year[date_time.month]} {date_time.day}, {hour_ampm[0]}:{minute} {hour_ampm[1]}'
